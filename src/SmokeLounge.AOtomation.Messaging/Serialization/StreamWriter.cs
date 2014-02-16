@@ -69,6 +69,11 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
             this.writer.Write(value);
         }
 
+        public void WriteSByte(SByte value)
+        {
+            this.writer.Write(value);
+        }
+
         public void WriteBytes(byte[] buffer)
         {
             this.writer.Write(buffer);

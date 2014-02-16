@@ -69,6 +69,11 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
             return this.reader.ReadByte();
         }
 
+        public SByte ReadSByte()
+        {
+            return this.reader.ReadSByte();
+        }
+
         public byte[] ReadBytes(int count)
         {
             return this.reader.ReadBytes(count);

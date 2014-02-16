@@ -143,6 +143,12 @@
     <Compile Include="GameData\Profession.cs" />
     <Compile Include="GameData\Quaternion.cs" />
     <Compile Include="GameData\KnuBotRejectedItem.cs" />
+    <Compile Include="GameData\QuestActionList.cs" />
+    <Compile Include="GameData\QuestCharInfo.cs" />
+    <Compile Include="GameData\QuestFaction.cs" />
+    <Compile Include="GameData\QuestIdentity.cs" />
+    <Compile Include="GameData\QuestInfo.cs" />
+    <Compile Include="GameData\QuestItemShort.cs" />
     <Compile Include="GameData\Side.cs" />
     <Compile Include="GameData\SimpleCharacterInfo.cs" />
     <Compile Include="GameData\SimpleNpcInfo.cs" />
@@ -199,6 +205,7 @@
     <Compile Include="Messages\N3Messages\OrgServerMessages\OrgInviteMessage.cs" />
     <Compile Include="Messages\N3Messages\OrgServerMessageType.cs" />
     <Compile Include="Messages\N3Messages\PlayfieldAnarchyFMessage.cs" />
+    <Compile Include="Messages\N3Messages\QuestAlternativeMessage.cs" />
     <Compile Include="Messages\N3Messages\ShopUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\SimpleCharFullUpdateFlags.cs" />
     <Compile Include="Messages\N3Messages\SimpleCharFullUpdateMessage.cs" />
@@ -267,6 +274,7 @@
     <Compile Include="Serialization\Serializers\Custom\SimpleCharFullUpdateSerializer.cs" />
     <Compile Include="Serialization\Serializers\DiagnosticSerializer.cs" />
     <Compile Include="Serialization\Serializers\IPAddressSerializer.cs" />
+    <Compile Include="Serialization\Serializers\SByteSerializer.cs" />
     <Compile Include="Serialization\Serializers\UInt16Serializer.cs" />
     <Compile Include="Serialization\Serializers\HeaderSerializer.cs" />
     <Compile Include="Serialization\Serializers\StringSerializer.cs" />
