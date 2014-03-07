@@ -22,7 +22,9 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
         TeamRequestReply = 0x00000015,
 
-        LeaveTeam = 0x00000020,
+        TeamKickMember = 0x00000016,
+
+		LeaveTeam = 0x00000020,
 
         AcceptTeamRequest = 0x00000023,
 
@@ -54,6 +56,8 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
         StartSneak = 0x000000A3,
 
+        Search = 0x00000066,
+
         ChangeVisualFlag = 0x000000A6,
 
         ChangeAnimationAndStance = 0x000000A7,
@@ -76,6 +80,12 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
         TradeskillRequirement = 0x000000E3,
 
-        TradeskillResult = 0x000000E4
+        TradeskillResult = 0x000000E4,
+        
+		TransferLeader = 0x00000019,
+        
+		TeamRequestInvite = 0x0000001A,
+ 
+		Split = 0x00000022,
     }
 }
