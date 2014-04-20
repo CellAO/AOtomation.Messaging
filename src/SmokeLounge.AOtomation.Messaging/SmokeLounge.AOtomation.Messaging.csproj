@@ -126,6 +126,9 @@
     <Compile Include="GameData\ChatMessage.cs" />
     <Compile Include="GameData\ChatMessageType.cs" />
     <Compile Include="GameData\Fatness.cs" />
+    <Compile Include="GameData\FollowCoordinateInfo.cs" />
+    <Compile Include="GameData\FollowInfo.cs" />
+    <Compile Include="GameData\FollowTargetInfo.cs" />
     <Compile Include="GameData\GameTuple.cs" />
     <Compile Include="GameData\InfoPacket.cs" />
     <Compile Include="GameData\InventorySlot.cs" />
@@ -270,6 +273,7 @@
     <Compile Include="Serialization\Serializers\ArraySerializer.cs" />
     <Compile Include="Serialization\Serializers\ArraySizeSerializer.cs" />
     <Compile Include="Serialization\Serializers\ByteSerializer.cs" />
+    <Compile Include="Serialization\Serializers\Custom\FollowInfoSerializer.cs" />
     <Compile Include="Serialization\Serializers\Custom\PlayfieldVendorInfoSerializer.cs" />
     <Compile Include="Serialization\Serializers\Custom\SimpleCharFullUpdateSerializer.cs" />
     <Compile Include="Serialization\Serializers\DiagnosticSerializer.cs" />
