@@ -69,6 +69,24 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
             return temp;
         }
 
+
+        public override string ToString()
+        {
+            return string.Format("{0}:{1}", Type, Instance);
+        }
+
+        public string ToString(bool asHex)
+        {
+            if (asHex)
+            {
+                return string.Format("{0}:{1}", ((int)Type).ToString("X8"), Instance.ToString("X8"));
+            }
+            else
+            {
+                return string.Format("{0}:{1}", ((int)Type), Instance);
+            }
+        }
+
         #endregion
     }
 }

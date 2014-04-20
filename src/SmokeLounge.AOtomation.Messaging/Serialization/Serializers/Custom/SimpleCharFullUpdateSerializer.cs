@@ -53,17 +53,17 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
         #region Public Methods and Operators
 
         public object Deserialize(
-            StreamReader streamReader, 
-            SerializationContext serializationContext, 
+            StreamReader streamReader,
+            SerializationContext serializationContext,
             PropertyMetaData propertyMetaData = null)
         {
             return new SimpleCharFullUpdateMessage();
         }
 
         public Expression DeserializerExpression(
-            ParameterExpression streamReaderExpression, 
-            ParameterExpression serializationContextExpression, 
-            Expression assignmentTargetExpression, 
+            ParameterExpression streamReaderExpression,
+            ParameterExpression serializationContextExpression,
+            Expression assignmentTargetExpression,
             PropertyMetaData propertyMetaData)
         {
             var deserializerMethodInfo =
@@ -73,8 +73,8 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                     (o => o.Deserialize);
             var serializerExp = Expression.New(this.GetType());
             var callExp = Expression.Call(
-                serializerExp, 
-                deserializerMethodInfo, 
+                serializerExp,
+                deserializerMethodInfo,
                 new Expression[]
                     {
                         streamReaderExpression, serializationContextExpression, 
@@ -87,9 +87,9 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
         }
 
         public void Serialize(
-            StreamWriter streamWriter, 
-            SerializationContext serializationContext, 
-            object value, 
+            StreamWriter streamWriter,
+            SerializationContext serializationContext,
+            object value,
             PropertyMetaData propertyMetaData = null)
         {
             var scfu = (SimpleCharFullUpdateMessage)value;
@@ -112,12 +112,14 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                 streamWriter.WriteInt32(scfu.PlayfieldId.Value);
             }
 
+            /*
             if (scfu.FightingTarget != null)
             {
                 flags |= SimpleCharFullUpdateFlags.HasFightingTarget;
                 streamWriter.WriteInt32((int)scfu.Identity.Type);
                 streamWriter.WriteInt32(scfu.Identity.Instance);
             }
+            */
 
             streamWriter.WriteSingle(scfu.Coordinates.X);
             streamWriter.WriteSingle(scfu.Coordinates.Y);
@@ -147,23 +149,39 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                 flags |= SimpleCharFullUpdateFlags.IsNpc;
                 if (snpc.Family > byte.MaxValue)
                 {
-                    flags |= SimpleCharFullUpdateFlags.HasExtendedNpcFamily;
                     streamWriter.WriteInt16(snpc.Family);
                 }
                 else
                 {
+                    flags |= SimpleCharFullUpdateFlags.HasSmallNpcFamily;
                     streamWriter.WriteByte((byte)snpc.Family);
                 }
 
                 if (snpc.LosHeight > byte.MaxValue)
                 {
-                    flags |= SimpleCharFullUpdateFlags.HasExtendedNpcLosHeight;
-                    streamWriter.WriteInt16(snpc.Family);
+                    streamWriter.WriteInt16(snpc.LosHeight);
                 }
                 else
                 {
+                    flags |= SimpleCharFullUpdateFlags.HasSmallNpcLosHeight;
                     streamWriter.WriteByte((byte)snpc.LosHeight);
                 }
+
+                // Unknown Data:
+                // SimpleCharFullUPdateFlags.UnknownDataFlag
+                // unset if short, set if byte
+                flags |= SimpleCharFullUpdateFlags.UnknownDataFlag;
+                streamWriter.WriteByte(0);
+
+                // Missing data:
+                // short
+                // if greater than 0 add another byte
+                streamWriter.WriteInt16(0);
+
+                flags |= SimpleCharFullUpdateFlags.UnknownFlag;
+                flags |= SimpleCharFullUpdateFlags.UnknownFlag2;
+                // flags |= SimpleCharFullUpdateFlags.UnknownDataFlag;
+                // flags |= SimpleCharFullUpdateFlags.IsNpc2;
             }
 
             var spc = scfu.CharacterInfo as SimplePcInfo;
@@ -213,8 +231,9 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             }
             else
             {
-                streamWriter.WriteUInt32(scfu.Health);
+                streamWriter.WriteInt32(scfu.Health);
             }
+
 
             if (scfu.HealthDamage <= byte.MaxValue)
             {
@@ -257,6 +276,40 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                 streamWriter.WriteByte((byte)scfu.RunSpeedBase);
             }
 
+            
+            if (scfu.FightingTarget != null)
+            {
+                flags |= SimpleCharFullUpdateFlags.IsUnderAttack;
+                Identity fightingTarget = (Identity)scfu.FightingTarget;
+                streamWriter.WriteInt32((int)fightingTarget.Type);
+                streamWriter.WriteInt32(fightingTarget.Instance);
+            }
+            
+
+            /*
+            if (scfu.ExtendedTextures != null)
+            {
+                flags |= SimpleCharFullUpdateFlags.HasExtendedTextures;
+                // Write extended texture data here
+            }
+            */
+
+            /*
+            if (scfu.PetId != 0)
+            {
+                flags |= SimpleCharFullUpdateFlags.IsPet;
+                streamWriter.WriteByte(scfu.PetId);
+            }
+            */
+
+            /*
+            if (scfu.Unknownyet) 
+            {
+                flags |= SimpleCharFullUpdateFlags.UnknownFlag3;
+                streamWriter.WriteByte(scfu.Unknownyet);
+            }
+            */
+
             streamWriter.WriteInt32((scfu.ActiveNanos.Length + 1) * 0x3F1);
             foreach (var activeNano in scfu.ActiveNanos)
             {
@@ -266,6 +319,15 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                 streamWriter.WriteInt32(activeNano.Time2);
             }
 
+            /*
+            if (scfu.Waypoints != null)
+            {
+                flags |= SimpleCharFullUpdateFlags.HasWaypoints;
+                // Write waypoints
+                // SCFU Array of Coordinates (3 floats)
+            }
+            */
+
             streamWriter.WriteInt32((scfu.Textures.Length + 1) * 0x3F1);
             foreach (var texture in scfu.Textures)
             {
@@ -273,6 +335,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                 streamWriter.WriteInt32(texture.Id);
                 streamWriter.WriteInt32(texture.Unknown);
             }
+
 
             streamWriter.WriteInt32((scfu.Meshes.Length + 1) * 0x3F1);
             foreach (var mesh in scfu.Meshes)
@@ -282,6 +345,23 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                 streamWriter.WriteInt32(mesh.OverrideTextureId);
                 streamWriter.WriteByte(mesh.Layer);
             }
+
+            /*
+            if (scfu.UnknownYet2!=0)
+            {
+                flags |= SimpleCharFullUpdateFlags.UnknownFlag4;
+                streamWriter.WriteByte(scfu.UnknownYet2);
+            }
+            */
+
+            // And another one with a list of Identities, maybe team members?
+            // Flag 0x40000000
+            // Never seen that one before
+
+
+
+
+
 
             streamWriter.WriteInt32(scfu.Flags2);
             streamWriter.WriteByte(scfu.Unknown2);
@@ -293,20 +373,20 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
         }
 
         public Expression SerializerExpression(
-            ParameterExpression streamWriterExpression, 
-            ParameterExpression serializationContextExpression, 
-            Expression valueExpression, 
+            ParameterExpression streamWriterExpression,
+            ParameterExpression serializationContextExpression,
+            Expression valueExpression,
             PropertyMetaData propertyMetaData)
         {
             var serializerMethodInfo =
                 ReflectionHelper
                     .GetMethodInfo
-                    <SimpleCharFullUpdateSerializer, 
+                    <SimpleCharFullUpdateSerializer,
                         Action<StreamWriter, SerializationContext, object, PropertyMetaData>>(o => o.Serialize);
             var serializerExp = Expression.New(this.GetType());
             var callExp = Expression.Call(
-                serializerExp, 
-                serializerMethodInfo, 
+                serializerExp,
+                serializerMethodInfo,
                 new[]
                     {
                         streamWriterExpression, serializationContextExpression, valueExpression, 

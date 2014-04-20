@@ -73,7 +73,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public short Level { get; set; }
 
         [AoMember(13)]
-        public uint Health { get; set; }
+        public int Health { get; set; }
 
         [AoMember(14)]
         public int HealthDamage { get; set; }

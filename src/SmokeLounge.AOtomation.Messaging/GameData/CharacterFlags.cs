@@ -23,6 +23,9 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
         None = 0x00000000, 
 
         // 0000 0000 0100 0000 0000 0000 0000 0000
-        HasVisibleName = 0x00400000
+        HasVisibleName = 0x00400000,
+
+        // 0000 0000 1000 0000 0000 0000 0000 0000
+        HasBlueName = 0x00800000,
     }
 }
