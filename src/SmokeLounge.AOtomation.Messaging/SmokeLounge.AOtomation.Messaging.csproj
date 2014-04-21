@@ -131,6 +131,7 @@
     <Compile Include="GameData\FollowTargetInfo.cs" />
     <Compile Include="GameData\GameTuple.cs" />
     <Compile Include="GameData\InfoPacket.cs" />
+    <Compile Include="GameData\InventoryEntry.cs" />
     <Compile Include="GameData\InventorySlot.cs" />
     <Compile Include="GameData\KnuBotDialogOption.cs" />
     <Compile Include="GameData\LoginCharacterInfo.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Messages\N3Messages\FeedbackMessage.cs" />
     <Compile Include="Messages\N3Messages\FormatFeedbackMessage.cs" />
     <Compile Include="Messages\N3Messages\InfoPacketMessage.cs" />
+    <Compile Include="Messages\N3Messages\InventoryUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\KnuBotAnswerListMessage.cs" />
     <Compile Include="Messages\N3Messages\KnuBotAppendTextMessage.cs" />
     <Compile Include="Messages\N3Messages\KnuBotFinishTradeMessage.cs" />
