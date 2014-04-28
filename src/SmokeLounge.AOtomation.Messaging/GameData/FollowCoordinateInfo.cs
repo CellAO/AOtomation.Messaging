@@ -23,7 +23,7 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
             }
         }
         [AoMember(1)]
-        public byte DataLength { get; set; }
+        public byte MoveMode { get; set; }
 
         [AoMember(2)]
         public byte CoordinateCount { get; set; }

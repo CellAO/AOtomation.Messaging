@@ -50,7 +50,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             {
                 var followCoordinateInfo = new FollowCoordinateInfo();
                 followCoordinateInfo.FollowInfoType = 1;
-                followCoordinateInfo.DataLength = streamReader.ReadByte();
+                followCoordinateInfo.MoveMode = streamReader.ReadByte();
                 followCoordinateInfo.CoordinateCount = streamReader.ReadByte();
                 followCoordinateInfo.CurrentCoordinates.X = streamReader.ReadSingle();
                 followCoordinateInfo.CurrentCoordinates.Y = streamReader.ReadSingle();
@@ -107,7 +107,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             if (fcinfo != null)
             {
                 streamWriter.WriteByte(fcinfo.FollowInfoType);
-                streamWriter.WriteByte(fcinfo.DataLength);
+                streamWriter.WriteByte(fcinfo.MoveMode);
                 streamWriter.WriteByte(fcinfo.CoordinateCount);
                 streamWriter.WriteSingle(fcinfo.CurrentCoordinates.X);
                 streamWriter.WriteSingle(fcinfo.CurrentCoordinates.Y);
