@@ -29,14 +29,14 @@
 
         public FollowTargetInfo()
         {
-            DataLength = 0;
+            this.MoveType = 0;
         }
 
         /// <summary>
         /// DataLength is 0 for FollowTargetInfo
         /// </summary>
         [AoMember(1)]
-        public byte DataLength { get; set; }
+        public byte MoveType { get; set; }
 
         /// <summary>
         /// </summary>
@@ -55,16 +55,16 @@
         /// <summary>
         /// </summary>
         [AoMember(5)]
-        public int Dummy2 { get; set; }
+        public float X { get; set; }
 
         /// <summary>
         /// </summary>
         [AoMember(6)]
-        public int Dummy3 { get; set; }
+        public float Y { get; set; }
 
         /// <summary>
         /// </summary>
         [AoMember(7)]
-        public int Dummy4 { get; set; }
+        public float Z { get; set; }
     }
 }

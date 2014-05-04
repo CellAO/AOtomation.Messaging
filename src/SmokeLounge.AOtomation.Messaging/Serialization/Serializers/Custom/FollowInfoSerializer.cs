@@ -64,15 +64,15 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             {
                 var followTargetInfo = new FollowTargetInfo();
                 followTargetInfo.FollowInfoType = 2;
-                followTargetInfo.DataLength = streamReader.ReadByte();
+                followTargetInfo.MoveType = streamReader.ReadByte();
                 IdentityType itype = (IdentityType)streamReader.ReadInt32();
 
                 followTargetInfo.Target = new Identity() { Type = itype, Instance = streamReader.ReadInt32() };
                 followTargetInfo.Dummy = streamReader.ReadByte();
                 followTargetInfo.Dummy1 = streamReader.ReadInt32();
-                followTargetInfo.Dummy2 = streamReader.ReadInt32();
-                followTargetInfo.Dummy3 = streamReader.ReadInt32();
-                followTargetInfo.Dummy4 = streamReader.ReadInt32();
+                followTargetInfo.X = streamReader.ReadInt32();
+                followTargetInfo.Y = streamReader.ReadInt32();
+                followTargetInfo.Z = streamReader.ReadInt32();
                 return followTargetInfo;
             }
 
@@ -94,14 +94,14 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             if (ftinfo != null)
             {
                 streamWriter.WriteByte(ftinfo.FollowInfoType);
-                streamWriter.WriteByte(ftinfo.DataLength);
+                streamWriter.WriteByte(ftinfo.MoveType);
                 streamWriter.WriteInt32((int)ftinfo.Target.Type);
                 streamWriter.WriteInt32(ftinfo.Target.Instance);
                 streamWriter.WriteByte(ftinfo.Dummy);
                 streamWriter.WriteInt32(ftinfo.Dummy1);
-                streamWriter.WriteInt32(ftinfo.Dummy2);
-                streamWriter.WriteInt32(ftinfo.Dummy3);
-                streamWriter.WriteInt32(ftinfo.Dummy4);
+                streamWriter.WriteSingle(ftinfo.X);
+                streamWriter.WriteSingle(ftinfo.Y);
+                streamWriter.WriteSingle(ftinfo.Z);
             }
             var fcinfo = value as FollowCoordinateInfo;
             if (fcinfo != null)
