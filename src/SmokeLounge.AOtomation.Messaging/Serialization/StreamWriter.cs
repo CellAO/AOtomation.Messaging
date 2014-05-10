@@ -19,6 +19,8 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
     using System.Net;
     using System.Text;
 
+    using SmokeLounge.AOtomation.Messaging.GameData;
+
     public sealed class StreamWriter : IDisposable
     {
         #region Fields
@@ -119,6 +121,12 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
         {
             var bigEndian = IPAddress.HostToNetworkOrder(value) >> 32;
             this.writer.Write((uint)bigEndian);
+        }
+
+        public void WriteIdentity(Identity value)
+        {
+            this.writer.Write((int)value.Type);
+            this.writer.Write(value.Instance);
         }
 
         #endregion

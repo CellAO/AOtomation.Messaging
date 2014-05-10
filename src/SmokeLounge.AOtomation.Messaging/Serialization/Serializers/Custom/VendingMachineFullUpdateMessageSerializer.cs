@@ -35,8 +35,6 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
 
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
     using System.Linq.Expressions;
     using System.Reflection;
 
@@ -93,14 +91,14 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             int identityInstance = streamReader.ReadInt32();
 
             message.NpcIdentity = new Identity() { Type = identityType, Instance = identityInstance };
-            
+
             if (message.NpcIdentity.Instance == 0)
             {
-                message.Coordinates=new Vector3();
+                message.Coordinates = new Vector3();
                 message.Coordinates.X = streamReader.ReadSingle();
                 message.Coordinates.Y = streamReader.ReadSingle();
                 message.Coordinates.Z = streamReader.ReadSingle();
-                message.Heading=new Quaternion();
+                message.Heading = new Quaternion();
                 message.Heading.X = streamReader.ReadSingle();
                 message.Heading.Y = streamReader.ReadSingle();
                 message.Heading.Z = streamReader.ReadSingle();
@@ -191,8 +189,63 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                 return;
             }
 
-            var playfieldVendorInfo = (VendingMachineFullUpdateMessageSerializer)value;
-            
+            var mes = (VendingMachineFullUpdateMessage)value;
+            streamWriter.WriteInt32((int)mes.N3MessageType);
+            streamWriter.WriteIdentity(mes.Identity);
+            streamWriter.WriteByte(mes.Unknown);
+
+            streamWriter.WriteInt32(mes.TypeIdentifier);
+            streamWriter.WriteIdentity(mes.NpcIdentity);
+            if (mes.NpcIdentity.Instance == 0)
+            {
+                streamWriter.WriteSingle(mes.Coordinates.X);
+                streamWriter.WriteSingle(mes.Coordinates.Y);
+                streamWriter.WriteSingle(mes.Coordinates.Z);
+                streamWriter.WriteSingle(mes.Heading.X);
+                streamWriter.WriteSingle(mes.Heading.Y);
+                streamWriter.WriteSingle(mes.Heading.Z);
+                streamWriter.WriteSingle(mes.Heading.W);
+            }
+            streamWriter.WriteInt32(mes.PlayfieldId);
+            streamWriter.WriteInt32(mes.Unknown4);
+            streamWriter.WriteInt32(mes.Unknown5);
+            streamWriter.WriteInt16(mes.Unknown6);
+
+            if (mes.Stats == null)
+            {
+                streamWriter.WriteInt32(0x3f1);
+            }
+            else
+            {
+                int len = mes.Stats.Length;
+                len = (len + 1) * 0x3f1;
+                streamWriter.WriteInt32(len);
+
+                foreach (GameTuple<CharacterStat, uint> v in mes.Stats)
+                {
+                    streamWriter.WriteInt32((int)v.Value1);
+                    streamWriter.WriteUInt32(v.Value2);
+                }
+            }
+
+            if (mes.Unknown7 == null)
+            {
+                streamWriter.WriteInt32(0);
+            }
+            else
+            {
+                streamWriter.WriteInt32(mes.Unknown7.Length);
+                streamWriter.WriteString(mes.Unknown7);
+            }
+
+            streamWriter.WriteInt32(mes.Unknown8);
+            streamWriter.WriteInt32(mes.Unknown9);
+            foreach (Identity id in mes.Unknown10)
+            {
+                streamWriter.WriteIdentity(id);
+            }
+
+            streamWriter.WriteInt32(mes.Unknown11);
         }
 
         public Expression SerializerExpression(
@@ -204,8 +257,8 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             MethodInfo serializerMethodInfo =
                 ReflectionHelper
                     .GetMethodInfo
-                    <VendingMachineFullUpdateMessageSerializer, Action<StreamWriter, SerializationContext, object, PropertyMetaData>
-                        >(o => o.Serialize);
+                    <VendingMachineFullUpdateMessageSerializer,
+                        Action<StreamWriter, SerializationContext, object, PropertyMetaData>>(o => o.Serialize);
             NewExpression serializerExp = Expression.New(this.GetType());
             MethodCallExpression callExp = Expression.Call(
                 serializerExp,
