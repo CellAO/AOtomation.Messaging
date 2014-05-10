@@ -38,7 +38,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
     #endregion
-
+    [AoContract((int)N3MessageType.DoorStatusUpdate)]
     public class DoorStatusUpdateMessage : N3Message
     {
         [AoMember(1)]
