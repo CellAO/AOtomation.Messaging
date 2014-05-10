@@ -48,18 +48,20 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         }
 
         [AoMember(1)]
-        public Identity DoorIdentity { get; set; }
-
-        [AoMember(2)]
         public int Unknown1 { get; set; }
 
+        [AoMember(2)]
+        public byte Unknown2 { get; set; }
+
         [AoMember(3)]
-        public int Unknown2 { get; set; }
+        public byte Unknown3 { get; set; }
 
         [AoMember(4)]
-        public int Unknown3 { get; set; }
+        public int Unknown4 { get; set; }
+        [AoMember(4)]
+        public byte Unknown5 { get; set; }
 
-        [AoMember(5, SerializeSize = ArraySizeType.X3F1)]
-        public Identity[] Unknown4 { get; set; }
+        [AoMember(6, SerializeSize = ArraySizeType.X3F1)]
+        public Identity[] Unknown6 { get; set; }
     }
 }
