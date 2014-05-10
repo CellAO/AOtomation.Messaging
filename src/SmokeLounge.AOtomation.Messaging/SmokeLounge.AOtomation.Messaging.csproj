@@ -162,6 +162,7 @@
     <Compile Include="GameData\Tower.cs" />
     <Compile Include="GameData\TowerField.cs" />
     <Compile Include="GameData\TowerInfoPacket.cs" />
+    <Compile Include="GameData\TowerProxyBase.cs" />
     <Compile Include="GameData\Vector3.cs" />
     <Compile Include="GameData\VendingMachineSlot.cs" />
     <Compile Include="Messages\Header.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Messages\N3Messages\OrgServerMessages\OrgInfoMessage.cs" />
     <Compile Include="Messages\N3Messages\OrgServerMessages\OrgInviteMessage.cs" />
     <Compile Include="Messages\N3Messages\OrgServerMessageType.cs" />
+    <Compile Include="Messages\N3Messages\PlayfieldAllTowersMessage.cs" />
     <Compile Include="Messages\N3Messages\PlayfieldAnarchyFMessage.cs" />
     <Compile Include="Messages\N3Messages\QuestAlternativeMessage.cs" />
     <Compile Include="Messages\N3Messages\ShopUpdateMessage.cs" />
@@ -279,6 +281,7 @@
     <Compile Include="Serialization\Serializers\Custom\FollowInfoSerializer.cs" />
     <Compile Include="Serialization\Serializers\Custom\PlayfieldVendorInfoSerializer.cs" />
     <Compile Include="Serialization\Serializers\Custom\SimpleCharFullUpdateSerializer.cs" />
+    <Compile Include="Serialization\Serializers\Custom\VendingMachineFullUpdateMessageSerializer.cs" />
     <Compile Include="Serialization\Serializers\DiagnosticSerializer.cs" />
     <Compile Include="Serialization\Serializers\IPAddressSerializer.cs" />
     <Compile Include="Serialization\Serializers\SByteSerializer.cs" />

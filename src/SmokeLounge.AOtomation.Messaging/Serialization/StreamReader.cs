@@ -19,6 +19,8 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
     using System.Net;
     using System.Text;
 
+    using SmokeLounge.AOtomation.Messaging.GameData;
+
     public sealed class StreamReader : IDisposable
     {
         #region Fields
@@ -117,6 +119,13 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
         {
             var littleEndian = this.reader.ReadUInt32() << 32;
             return (uint)(IPAddress.NetworkToHostOrder(littleEndian) >> 32);
+        }
+
+        public Identity ReadIdentity()
+        {
+            IdentityType type = (IdentityType)this.ReadInt32();
+            int instance = this.ReadInt32();
+            return new Identity(){Type=type,Instance = instance};
         }
 
         #endregion

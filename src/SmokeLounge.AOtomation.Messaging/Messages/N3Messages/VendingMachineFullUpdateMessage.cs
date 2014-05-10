@@ -1,22 +1,43 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="VendingMachineFullUpdateMessage.cs" company="SmokeLounge">
-//   Copyright © 2013 SmokeLounge.
-//   This program is free software. It comes without any warranty, to
-//   the extent permitted by applicable law. You can redistribute it
-//   and/or modify it under the terms of the Do What The Fuck You Want
-//   To Public License, Version 2, as published by Sam Hocevar. See
-//   http://www.wtfpl.net/ for more details.
-// </copyright>
-// <summary>
-//   Defines the VendingMachineFullUpdateMessage type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+﻿#region License
+
+// Copyright (c) 2005-2014, CellAO Team
+// 
+// 
+// All rights reserved.
+// 
+// 
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+// 
+// 
+//     * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+//     * Neither the name of the CellAO Team nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+// 
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+// EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+// PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+// NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// 
+
+#endregion
 
 namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 {
+    #region Usings ...
+
     using SmokeLounge.AOtomation.Messaging.GameData;
     using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
+
+    #endregion
 
     [AoContract((int)N3MessageType.VendingMachineFullUpdate)]
     public class VendingMachineFullUpdateMessage : N3Message
@@ -32,14 +53,12 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
         #region AoMember Properties
 
-        [AoMember(0)]
-        public int Unknown1 { get; set; }
-
         [AoMember(1)]
-        public int Unknown2 { get; set; }
+        public int TypeIdentifier { get; set; }
 
+        // If NpcIdentity is Identity.None then dont serialize/deserialize Coordinates and Heading
         [AoMember(2)]
-        public int Unknown3 { get; set; }
+        public Identity NpcIdentity { get; set; }
 
         [AoMember(3)]
         public Vector3 Coordinates { get; set; }
@@ -59,77 +78,23 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         [AoMember(8)]
         public short Unknown6 { get; set; }
 
-        [AoMember(9)]
-        public int Unknown7 { get; set; }
+        [AoMember(9, SerializeSize = ArraySizeType.X3F1)]
+        public GameTuple<CharacterStat, uint>[] Stats { get; set; }
 
-        [AoMember(10)]
-        public int Unknown8 { get; set; }
+        [AoMember(10, SerializeSize = ArraySizeType.Int32)]
+        public string Unknown7 { get; set; }
 
         [AoMember(11)]
-        public byte Unknown9 { get; set; }
+        public int Unknown8 { get; set; }
 
         [AoMember(12)]
-        public byte Unknown10 { get; set; }
+        public int Unknown9 { get; set; }
 
-        [AoMember(13)]
-        public short Unknown11 { get; set; }
+        [AoMember(13, SerializeSize = ArraySizeType.X3F1)]
+        public Identity[] Unknown10 { get; set; }
 
         [AoMember(14)]
-        public int Unknown12 { get; set; }
-
-        [AoMember(15)]
-        public int TemplateId { get; set; }
-
-        [AoMember(16)]
-        public int Unknown13 { get; set; }
-
-        [AoMember(17)]
-        public int Unknown14 { get; set; }
-
-        [AoMember(18)]
-        public int Unknown15 { get; set; }
-
-        [AoMember(19)]
-        public int Unknown16 { get; set; }
-
-        [AoMember(20)]
-        public int Unknown17 { get; set; }
-
-        [AoMember(21)]
-        public int Unknown18 { get; set; }
-
-        [AoMember(22)]
-        public int Unknown19 { get; set; }
-
-        [AoMember(23)]
-        public int Unknown20 { get; set; }
-
-        [AoMember(24)]
-        public int Unknown21 { get; set; }
-
-        [AoMember(25)]
-        public int Unknown22 { get; set; }
-
-        [AoMember(26)]
-        public int Unknown23 { get; set; }
-
-        [AoMember(27)]
-        public int Unknown24 { get; set; }
-
-        [AoMember(28)]
-        public int Unknown25 { get; set; }
-
-        [AoMember(29)]
-        public int Unknown26 { get; set; }
-
-        [AoMember(30)]
-        public int Unknown27 { get; set; }
-
-        [AoMember(31, SerializeSize = ArraySizeType.X3F1)]
-        public object[] Unknown28 { get; set; }
-
-        [AoMember(32)]
-        public int Unknown29 { get; set; }
+        public int Unknown11 { get; set; }
 
         #endregion
     }

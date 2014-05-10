@@ -14,7 +14,7 @@
 
 namespace SmokeLounge.AOtomation.Messaging.GameData
 {
-    public enum CharacterStat
+    public enum CharacterStat : int
     {
         Flags = 0x00000000, 
 

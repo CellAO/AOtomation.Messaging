@@ -71,6 +71,9 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
                                            new SimpleCharFullUpdateSerializer()
                                        },
                                        { typeof(FollowInfo), new FollowInfoSerializer() },
+                                       {
+                                           typeof(VendingMachineFullUpdateMessage), new VendingMachineFullUpdateMessageSerializer()
+                                       }
                                    };
         }
 
