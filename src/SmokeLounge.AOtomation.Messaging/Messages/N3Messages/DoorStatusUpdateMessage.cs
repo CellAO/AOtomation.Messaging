@@ -44,7 +44,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
     {
         public DoorStatusUpdateMessage()
         {
-            this.N3MessageType = N3MessageType.Despawn;
+            this.N3MessageType = N3MessageType.DoorStatusUpdate;
         }
 
         [AoMember(1)]
