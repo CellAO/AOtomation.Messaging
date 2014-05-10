@@ -60,6 +60,6 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public int Unknown3 { get; set; }
 
         [AoMember(5, SerializeSize = ArraySizeType.X3F1)]
-        public Identity Unknown4 { get; set; }
+        public Identity[] Unknown4 { get; set; }
     }
 }
