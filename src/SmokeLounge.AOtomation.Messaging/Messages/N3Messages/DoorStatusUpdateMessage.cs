@@ -38,9 +38,15 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
     #endregion
+
     [AoContract((int)N3MessageType.DoorStatusUpdate)]
     public class DoorStatusUpdateMessage : N3Message
     {
+        public DoorStatusUpdateMessage()
+        {
+            this.N3MessageType = N3MessageType.Despawn;
+        }
+
         [AoMember(1)]
         public Identity DoorIdentity { get; set; }
 
