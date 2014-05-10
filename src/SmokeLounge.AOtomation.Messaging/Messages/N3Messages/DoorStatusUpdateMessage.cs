@@ -34,6 +34,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
     #region Usings ...
 
     using SmokeLounge.AOtomation.Messaging.GameData;
+    using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
     #endregion
@@ -52,8 +53,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         [AoMember(4)]
         public int Unknown3 { get; set; }
 
-        [AoMember(5)]
-        // 3f1
-        public int Unknown4 { get; set; }
+        [AoMember(5, SerializeSize = ArraySizeType.X3F1)]
+        public Identity Unknown4 { get; set; }
     }
 }
