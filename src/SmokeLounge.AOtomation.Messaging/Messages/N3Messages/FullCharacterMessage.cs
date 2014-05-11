@@ -34,7 +34,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         #region AoMember Properties
 
         [AoMember(0)]
-        public int Unknown1 { get; set; }
+        public int MsgVersion { get; set; }
 
         [AoMember(1, SerializeSize = ArraySizeType.X3F1)]
         public InventorySlot[] InventorySlots { get; set; }
@@ -43,53 +43,69 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public int[] UploadedNanoIds { get; set; }
 
         [AoMember(3, SerializeSize = ArraySizeType.X3F1)]
-        public object[] Unknown2 { get; set; }
+        public FullCharacterSub[] Unknown2 { get; set; }
 
         [AoMember(4)]
         public int Unknown3 { get; set; }
 
         [AoMember(5)]
-        public int Unknown4 { get; set; }
+        public int UnknownI1 { get; set; }
 
-        [AoMember(6)]
-        public int Unknown5 { get; set; }
+        [AoMember(6, SerializeSize=ArraySizeType.Int32)]
+        public FullCharacterSub2[] Unknown4 { get; set; }
 
         [AoMember(7)]
-        public int Unknown6 { get; set; }
+        public int UnknownI2 { get; set; }
 
-        [AoMember(8)]
-        public int Unknown7 { get; set; }
+        [AoMember(8, SerializeSize = ArraySizeType.Int32)]
+        public FullCharacterSub2[] Unknown5 { get; set; }
 
+        
         [AoMember(9)]
-        public int Unknown8 { get; set; }
+        public int UnknownI3 { get; set; }
 
-        [AoMember(10, SerializeSize = ArraySizeType.X3F1)]
-        public GameTuple<int, uint>[] Stats1 { get; set; }
+        [AoMember(10, SerializeSize = ArraySizeType.Int32)]
+        public FullCharacterSub2[] Unknown6 { get; set; }
+
 
         [AoMember(11, SerializeSize = ArraySizeType.X3F1)]
-        public GameTuple<int, uint>[] Stats2 { get; set; }
+        public GameTuple<int, uint>[] Stats1 { get; set; }
 
         [AoMember(12, SerializeSize = ArraySizeType.X3F1)]
-        public GameTuple<byte, byte>[] Stats3 { get; set; }
+        public GameTuple<int, uint>[] Stats2 { get; set; }
 
         [AoMember(13, SerializeSize = ArraySizeType.X3F1)]
+        public GameTuple<byte, byte>[] Stats3 { get; set; }
+
+        [AoMember(14, SerializeSize = ArraySizeType.X3F1)]
         public GameTuple<byte, short>[] Stats4 { get; set; }
 
-        [AoMember(14)]
+        // Conditional!!
+        [AoMember(15)]
         public int Unknown9 { get; set; }
 
-        [AoMember(15)]
+        // Flags HERE!!
+        [AoMember(16)]
         public int Unknown10 { get; set; }
 
-        [AoMember(16, SerializeSize = ArraySizeType.X3F1)]
-        public object[] Unknown11 { get; set; }
+        // Some conditional stuff here
+        // Team/Raid Identity, 3f1 Team Data/Raid Data?
+
 
         [AoMember(17, SerializeSize = ArraySizeType.X3F1)]
-        public object[] Unknown12 { get; set; }
+        public Identity[] Unknown11 { get; set; }
 
         [AoMember(18, SerializeSize = ArraySizeType.X3F1)]
+        public object[] Unknown12 { get; set; }
+
+        [AoMember(19, SerializeSize = ArraySizeType.X3F1)]
         public object[] Unknown13 { get; set; }
 
+
+        private bool Deserialize1()
+        {
+            return this.UnknownI1 != 0;
+        }
         #endregion
     }
 }

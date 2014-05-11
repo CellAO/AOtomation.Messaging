@@ -31,6 +31,8 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
 
         private readonly AoUsesFlagsAttribute[] usesFlagsAttributes;
 
+        private readonly bool conditional;
+
         #endregion
 
         #region Constructors and Destructors
@@ -95,6 +97,14 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
             get
             {
                 return this.usesFlagsAttributes;
+            }
+        }
+
+        public bool Conditional
+        {
+            get
+            {
+                return this.conditional;
             }
         }
 

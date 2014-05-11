@@ -52,9 +52,11 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
                 followCoordinateInfo.FollowInfoType = 1;
                 followCoordinateInfo.MoveMode = streamReader.ReadByte();
                 followCoordinateInfo.CoordinateCount = streamReader.ReadByte();
+                followCoordinateInfo.CurrentCoordinates=new Vector3();
                 followCoordinateInfo.CurrentCoordinates.X = streamReader.ReadSingle();
                 followCoordinateInfo.CurrentCoordinates.Y = streamReader.ReadSingle();
                 followCoordinateInfo.CurrentCoordinates.Z = streamReader.ReadSingle();
+                followCoordinateInfo.EndCoordinates=new Vector3();
                 followCoordinateInfo.EndCoordinates.X = streamReader.ReadSingle();
                 followCoordinateInfo.EndCoordinates.Y = streamReader.ReadSingle();
                 followCoordinateInfo.EndCoordinates.Z = streamReader.ReadSingle();

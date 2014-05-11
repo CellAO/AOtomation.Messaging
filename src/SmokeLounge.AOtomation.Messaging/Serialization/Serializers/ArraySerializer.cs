@@ -15,6 +15,7 @@
 namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq.Expressions;
 
@@ -53,91 +54,171 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
         #region Public Methods and Operators
 
         public object Deserialize(
-            StreamReader streamReader, 
-            SerializationContext serializationContext, 
+            StreamReader streamReader,
+            SerializationContext serializationContext,
             PropertyMetaData propertyMetaData = null)
         {
             int arrayLength;
-            if (propertyMetaData.Options.SerializeSize != ArraySizeType.NoSerialization)
+            var array = Array.CreateInstance(this.typeSerializer.Type, 0);
+            if (propertyMetaData.Options.SerializeSize == ArraySizeType.NullTerminated)
             {
-                var arraySizeSerializer = new ArraySizeSerializer(propertyMetaData.Options.SerializeSize);
-                arrayLength = (int)arraySizeSerializer.Deserialize(streamReader, serializationContext, propertyMetaData);
+                List<object> temp = new List<object>();
+                int check = 0;
+                do
+                {
+                    check = streamReader.ReadInt32();
+                    if (check != 0)
+                    {
+                        streamReader.Position -= 4;
+                        var element = this.typeSerializer.Deserialize(
+                            streamReader,
+                            serializationContext,
+                            propertyMetaData);
+                        temp.Add(element);
+                    }
+                }
+                while (check != 0);
             }
             else
             {
-                arrayLength = propertyMetaData.Options.FixedSizeLength;
-            }
+                if (propertyMetaData.Options.SerializeSize != ArraySizeType.NoSerialization)
+                {
+                    var arraySizeSerializer = new ArraySizeSerializer(propertyMetaData.Options.SerializeSize);
+                    arrayLength = (int)arraySizeSerializer.Deserialize(streamReader, serializationContext, propertyMetaData);
+                }
+                else
+                {
+                    arrayLength = propertyMetaData.Options.FixedSizeLength;
+                }
 
-            var array = Array.CreateInstance(this.typeSerializer.Type, arrayLength);
-            for (var i = 0; i < arrayLength; i++)
-            {
-                var element = this.typeSerializer.Deserialize(streamReader, serializationContext, propertyMetaData);
-                array.SetValue(element, i);
+                array = Array.CreateInstance(this.typeSerializer.Type, arrayLength);
+                for (var i = 0; i < arrayLength; i++)
+                {
+                    var element = this.typeSerializer.Deserialize(streamReader, serializationContext, propertyMetaData);
+                    array.SetValue(element, i);
+                }
             }
 
             return array;
         }
 
         public Expression DeserializerExpression(
-            ParameterExpression streamReaderExpression, 
-            ParameterExpression serializationContextExpression, 
-            Expression assignmentTargetExpression, 
+            ParameterExpression streamReaderExpression,
+            ParameterExpression serializationContextExpression,
+            Expression assignmentTargetExpression,
             PropertyMetaData propertyMetaData)
         {
             var expressions = new List<Expression>();
 
             var arrayLength = Expression.Variable(typeof(int), "size");
+            var newArray = Expression.Parameter(this.type, "newArray");
+            var counter = Expression.Variable(typeof(int), "i");
+            var element = Expression.Variable(this.typeSerializer.Type, "element");
+            var @break = Expression.Label();
 
             Expression setArrayLength;
-            if (propertyMetaData.Options.SerializeSize != ArraySizeType.NoSerialization)
+
+            if (propertyMetaData.Options.SerializeSize == ArraySizeType.NullTerminated)
             {
-                setArrayLength =
-                    new ArraySizeSerializer(propertyMetaData.Options.SerializeSize).DeserializerExpression(
-                        streamReaderExpression, serializationContextExpression, arrayLength, propertyMetaData);
+
+                var xt1 = typeof(List<>).MakeGenericType(this.typeSerializer.Type);
+                var tempList = Expression.Variable(xt1, "xt1");
+                NewExpression newListExpression = Expression.New(xt1);
+                
+                // Create temporary List<T>
+
+                expressions.Add(Expression.Assign(tempList, newListExpression));
+
+
+                var readint = Expression.Assign(arrayLength, Expression.Call(streamReaderExpression, ReflectionHelper.GetMethodInfo<StreamReader, Func<int>>(o => o.ReadInt32)));
+                var positionProp = Expression.PropertyOrField(streamReaderExpression, "Position");
+
+                var innerBlock = Expression.Block(
+                    new[] { element },
+                    new[]
+                    {
+                        Expression.SubtractAssign(positionProp, Expression.Constant((long)4)),
+                        this.typeSerializer.DeserializerExpression(
+                            streamReaderExpression,
+                            serializationContextExpression,
+                            element,
+                            propertyMetaData),
+                        Expression.Call(
+                            tempList,
+                            typeof(List<>).MakeGenericType(this.typeSerializer.Type).GetMethod("Add"),
+                            new[] { element })
+                    });
+
+
+                var ifElse3 = Expression.Block(
+                    new[] { arrayLength },
+                    new Expression[]
+                    {readint,
+                        Expression.IfThenElse(
+                            Expression.NotEqual(arrayLength, Expression.Constant(0)),
+                            innerBlock,
+                            Expression.Break(@break))
+                    });
+                expressions.Add(Expression.Assign(arrayLength, Expression.Constant(1)));
+
+
+                expressions.Add(Expression.Loop(ifElse3, @break));
+                expressions.Add(Expression.Assign(newArray, Expression.Call(tempList, typeof(List<>).MakeGenericType(this.typeSerializer.Type).GetMethod("ToArray"))));
+
+                var assignExp = Expression.Assign(assignmentTargetExpression, Expression.Convert(newArray, this.type));
+                expressions.Add(assignExp);
+
+                var block = Expression.Block(new[] { tempList, arrayLength, newArray, counter }, expressions);
+                return block;
             }
             else
             {
-                setArrayLength = Expression.Assign(
-                    arrayLength, Expression.Constant(propertyMetaData.Options.FixedSizeLength, typeof(int)));
-            }
+                if (propertyMetaData.Options.SerializeSize != ArraySizeType.NoSerialization)
+                {
+                    setArrayLength =
+                        new ArraySizeSerializer(propertyMetaData.Options.SerializeSize).DeserializerExpression(
+                            streamReaderExpression, serializationContextExpression, arrayLength, propertyMetaData);
+                }
+                else
+                {
+                    setArrayLength = Expression.Assign(
+                        arrayLength, Expression.Constant(propertyMetaData.Options.FixedSizeLength, typeof(int)));
+                }
 
-            expressions.Add(setArrayLength);
+                expressions.Add(setArrayLength);
 
-            var createNewArray = Expression.NewArrayBounds(this.typeSerializer.Type, arrayLength);
-            var newArray = Expression.Parameter(this.type, "newArray");
-            expressions.Add(Expression.Assign(newArray, createNewArray));
+                var createNewArray = Expression.NewArrayBounds(this.typeSerializer.Type, arrayLength);
+                expressions.Add(Expression.Assign(newArray, createNewArray));
 
-            var @break = Expression.Label();
-            var counter = Expression.Variable(typeof(int), "i");
-            expressions.Add(Expression.Assign(counter, Expression.Constant(0)));
-            var element = Expression.Variable(this.typeSerializer.Type, "element");
-            var assign = Expression.Assign(Expression.ArrayAccess(newArray, counter), element);
-            var ifElse = Expression.IfThenElse(
-                Expression.LessThan(counter, arrayLength), 
-                Expression.Block(
-                    new[] { element }, 
-                    new[]
+                expressions.Add(Expression.Assign(counter, Expression.Constant(0)));
+                var assign = Expression.Assign(Expression.ArrayAccess(newArray, counter), element);
+                var ifElse = Expression.IfThenElse(
+                    Expression.LessThan(counter, arrayLength),
+                    Expression.Block(
+                        new[] { element },
+                        new[]
                         {
                             this.typeSerializer.DeserializerExpression(
                                 streamReaderExpression, serializationContextExpression, element, propertyMetaData), 
                             assign, Expression.Assign(counter, Expression.Increment(counter))
-                        }), 
-                Expression.Break(@break));
+                        }),
+                    Expression.Break(@break));
 
-            var forExp = Expression.Loop(ifElse, @break);
-            expressions.Add(forExp);
+                var forExp = Expression.Loop(ifElse, @break);
+                expressions.Add(forExp);
 
-            var assignExp = Expression.Assign(assignmentTargetExpression, Expression.Convert(newArray, this.type));
-            expressions.Add(assignExp);
+                var assignExp = Expression.Assign(assignmentTargetExpression, Expression.Convert(newArray, this.type));
+                expressions.Add(assignExp);
 
-            var block = Expression.Block(new[] { arrayLength, newArray, counter }, expressions);
-            return block;
+                var block = Expression.Block(new[] { arrayLength, newArray, counter }, expressions);
+                return block;
+            }
         }
 
         public void Serialize(
-            StreamWriter streamWriter, 
-            SerializationContext serializationContext, 
-            object value, 
+            StreamWriter streamWriter,
+            SerializationContext serializationContext,
+            object value,
             PropertyMetaData propertyMetaData = null)
         {
             if (propertyMetaData.Options.SerializeSize != ArraySizeType.NoSerialization)
@@ -156,9 +237,9 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
         }
 
         public Expression SerializerExpression(
-            ParameterExpression streamWriterExpression, 
-            ParameterExpression serializationContextExpression, 
-            Expression valueExpression, 
+            ParameterExpression streamWriterExpression,
+            ParameterExpression serializationContextExpression,
+            Expression valueExpression,
             PropertyMetaData propertyMetaData)
         {
             if (valueExpression.Type.IsAssignableFrom(this.type) == false)
@@ -182,16 +263,16 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
             var element = Expression.Variable(this.typeSerializer.Type, "element");
             var assign = Expression.Assign(element, Expression.ArrayIndex(valueExpression, counter));
             var ifElse = Expression.IfThenElse(
-                Expression.LessThan(counter, arrayLength), 
+                Expression.LessThan(counter, arrayLength),
                 Expression.Block(
-                    new[] { element }, 
+                    new[] { element },
                     new[]
                         {
                             assign, 
                             this.typeSerializer.SerializerExpression(
                                 streamWriterExpression, serializationContextExpression, element, propertyMetaData), 
                             Expression.Assign(counter, Expression.Increment(counter))
-                        }), 
+                        }),
                 Expression.Break(@break));
 
             var forExp = Expression.Loop(ifElse, @break);

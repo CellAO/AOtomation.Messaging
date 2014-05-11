@@ -47,6 +47,9 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
                 case ArraySizeType.X3F1:
                     this.type = typeof(int);
                     break;
+                case ArraySizeType.NullTerminated:
+                    this.type = null;
+                    break;
             }
         }
 
@@ -84,6 +87,8 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
                 case ArraySizeType.X3F1:
                     var length3F1 = streamReader.ReadInt32();
                     return (length3F1 / 0x03F1) - 1;
+                case ArraySizeType.NullTerminated:
+                    return null;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -156,7 +161,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
             object value, 
             PropertyMetaData propertyMetaData = null)
         {
-            if (this.arraySizeType == ArraySizeType.NoSerialization)
+            if ((this.arraySizeType == ArraySizeType.NoSerialization)|| (this.arraySizeType==ArraySizeType.NullTerminated))
             {
                 return;
             }
@@ -191,7 +196,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
             Expression valueExpression, 
             PropertyMetaData propertyMetaData)
         {
-            if (this.arraySizeType == ArraySizeType.NoSerialization)
+            if ((this.arraySizeType == ArraySizeType.NoSerialization) || (this.arraySizeType == ArraySizeType.NullTerminated))
             {
                 return null;
             }

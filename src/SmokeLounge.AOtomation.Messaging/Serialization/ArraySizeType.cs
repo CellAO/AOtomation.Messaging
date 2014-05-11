@@ -24,6 +24,8 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
 
         Int32, 
 
-        X3F1
+        X3F1,
+
+        NullTerminated
     }
 }

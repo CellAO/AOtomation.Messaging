@@ -62,7 +62,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages
 
         CastNanoSpell = 0x25314d6d, 
 
-        ResearchUpdate = 0x253d024c, 
+        ResearchUpdate = 0x253d0240, 
 
         FollowTarget = 0x260f3671, 
 

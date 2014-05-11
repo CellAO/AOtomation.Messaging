@@ -15,6 +15,7 @@
 namespace SmokeLounge.AOtomation.Messaging.Serialization
 {
     using System.Collections.Generic;
+    using System.Text;
 
     public class DiagnosticInfo
     {
@@ -58,6 +59,16 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
         public void Add(DiagnosticInfo diagnosticInfo)
         {
             this.diagnosticInfos.Add(diagnosticInfo);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Diagnostic Info:");
+            sb.AppendLine("Length: " + Length.ToString("X8") + ", Offset: " + Offset.ToString("X8"));
+            sb.AppendLine("Property: " + PropertyMetaData.Property.Name);
+            sb.AppendLine("Value: " + Value.ToString() + " of " + Value.GetType().Name);
+            return sb.ToString();
         }
 
         #endregion

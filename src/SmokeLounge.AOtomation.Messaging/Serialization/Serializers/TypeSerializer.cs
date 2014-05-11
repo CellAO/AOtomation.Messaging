@@ -86,43 +86,66 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
         #region Public Methods and Operators
 
         public object Deserialize(
-            StreamReader streamReader, 
-            SerializationContext serializationContext, 
+            StreamReader streamReader,
+            SerializationContext serializationContext,
             PropertyMetaData propertyMetaData = null)
         {
-            return this.DeserializerLambda(streamReader, serializationContext);
+            object obj = null;
+            long streamReaderPosition = streamReader.Position;
+            try
+            {
+                obj = this.DeserializerLambda(streamReader, serializationContext);
+            }
+            catch (Exception e)
+            {
+                Probe pb = serializationContext.BeginProbe();
+                try
+                {
+                    streamReader.Position = streamReaderPosition;
+                    serializationContext.Deserialize(streamReader, propertyMetaData);
+                }
+                catch (Exception)
+                {
+                }
+                serializationContext.EndProbe(pb);
+                if (pb.DiagnosticInfo.PropertyMetaData != null)
+                {
+                    throw new Exception("TypeSerializer failed." + Environment.NewLine + string.Join(Environment.NewLine, pb.DiagnosticInfo) + Environment.NewLine, e);
+                }
+            }
+            return obj;
         }
 
         public Expression DeserializerExpression(
-            ParameterExpression streamReaderExpression, 
-            ParameterExpression serializationContextExpression, 
-            Expression assignmentTargetExpression, 
+            ParameterExpression streamReaderExpression,
+            ParameterExpression serializationContextExpression,
+            Expression assignmentTargetExpression,
             PropertyMetaData propertyMetaData)
         {
             var invokeExp = Expression.Invoke(
-                this.deserializerExpression.Value, 
+                this.deserializerExpression.Value,
                 new Expression[] { streamReaderExpression, serializationContextExpression });
             var assignExp = Expression.Assign(assignmentTargetExpression, Expression.Convert(invokeExp, this.type));
             return assignExp;
         }
 
         public void Serialize(
-            StreamWriter streamWriter, 
-            SerializationContext serializationContext, 
-            object value, 
+            StreamWriter streamWriter,
+            SerializationContext serializationContext,
+            object value,
             PropertyMetaData propertyMetaData = null)
         {
             this.SerializerLambda(streamWriter, serializationContext, value);
         }
 
         public Expression SerializerExpression(
-            ParameterExpression streamWriterExpression, 
-            ParameterExpression serializationContextExpression, 
-            Expression valueExpression, 
+            ParameterExpression streamWriterExpression,
+            ParameterExpression serializationContextExpression,
+            Expression valueExpression,
             PropertyMetaData propertyMetaData)
         {
             var invokeExp = Expression.Invoke(
-                this.serializerExpression.Value, 
+                this.serializerExpression.Value,
                 new[] { streamWriterExpression, serializationContextExpression, valueExpression });
             return invokeExp;
         }
