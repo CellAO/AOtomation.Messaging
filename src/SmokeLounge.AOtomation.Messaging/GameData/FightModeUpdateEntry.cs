@@ -29,30 +29,27 @@
 
 #endregion
 
-namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
+namespace SmokeLounge.AOtomation.Messaging.GameData
 {
     #region Usings ...
 
+    using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
     #endregion
 
-    [AoContract((int)N3MessageType.Buff)]
-    public class BuffMessage : N3Message
+    public class FightModeUpdateEntry
     {
-        public BuffMessage()
-        {
-            this.N3MessageType = N3MessageType.Buff;
-        }
-
         [AoMember(1)]
-        public short Action { get; set; }
+        public int Unknown1 { get; set; }
 
-        [AoMember(2)]
-        public int Instance { get; set; }
+        [AoMember(2, SerializeSize = ArraySizeType.Int16)]
+        public string Name { get; set; }
 
         [AoMember(3)]
-        public int NanoId { get; set; }
+        public byte Unknown2 { get; set; }
 
+        [AoMember(4)]
+        public byte Unknown3 { get; set; }
     }
 }

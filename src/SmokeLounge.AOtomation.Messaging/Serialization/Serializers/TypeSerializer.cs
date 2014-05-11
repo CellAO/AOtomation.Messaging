@@ -102,16 +102,13 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
                 try
                 {
                     streamReader.Position = streamReaderPosition;
-                    serializationContext.Deserialize(streamReader, propertyMetaData);
+                    obj = this.DeserializerLambda(streamReader, serializationContext);
                 }
                 catch (Exception)
                 {
                 }
                 serializationContext.EndProbe(pb);
-                if (pb.DiagnosticInfo.PropertyMetaData != null)
-                {
-                    throw new Exception("TypeSerializer failed." + Environment.NewLine + string.Join(Environment.NewLine, pb.DiagnosticInfo) + Environment.NewLine, e);
-                }
+                throw new Exception("TypeSerializer failed ("+this.Type.ToString()+")." + Environment.NewLine + e.Message + string.Join(Environment.NewLine, pb.DiagnosticInfo) + Environment.NewLine, e);
             }
             return obj;
         }

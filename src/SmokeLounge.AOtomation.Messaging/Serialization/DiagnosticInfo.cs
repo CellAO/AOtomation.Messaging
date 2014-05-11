@@ -66,8 +66,14 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Diagnostic Info:");
             sb.AppendLine("Length: " + Length.ToString("X8") + ", Offset: " + Offset.ToString("X8"));
-            sb.AppendLine("Property: " + PropertyMetaData.Property.Name);
-            sb.AppendLine("Value: " + Value.ToString() + " of " + Value.GetType().Name);
+            if (PropertyMetaData != null)
+            {
+                sb.AppendLine("Property: " + PropertyMetaData.Property.Name);
+            }
+            if (Value != null)
+            {
+                sb.AppendLine("Value: " + Value.ToString() + " of " + Value.GetType().Name);
+            }
             return sb.ToString();
         }
 

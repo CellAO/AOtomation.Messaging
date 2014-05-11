@@ -22,6 +22,8 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
 
         EqualsToAny, 
 
+        HasNone,
+
         Default
     }
 }

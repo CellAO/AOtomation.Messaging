@@ -29,30 +29,28 @@
 
 #endregion
 
-namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
+namespace SmokeLounge.AOtomation.Messaging.Messages
 {
     #region Usings ...
 
+    using SmokeLounge.AOtomation.Messaging.GameData;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
     #endregion
 
-    [AoContract((int)N3MessageType.Buff)]
-    public class BuffMessage : N3Message
+    [AoContract((int)N3MessageType.CharSecSpecAttack)]
+    public class CharSecSpecAttackMessage : N3Message
     {
-        public BuffMessage()
+        public CharSecSpecAttackMessage()
         {
-            this.N3MessageType = N3MessageType.Buff;
+            this.N3MessageType = N3MessageType.CharSecSpecAttack;
         }
 
         [AoMember(1)]
-        public short Action { get; set; }
+        public Identity target { get; set; }
 
         [AoMember(2)]
-        public int Instance { get; set; }
-
-        [AoMember(3)]
-        public int NanoId { get; set; }
+        public int Unknown1 { get; set; }
 
     }
 }

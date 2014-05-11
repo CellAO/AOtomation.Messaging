@@ -33,26 +33,24 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 {
     #region Usings ...
 
+    using SmokeLounge.AOtomation.Messaging.GameData;
+    using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
     #endregion
 
-    [AoContract((int)N3MessageType.Buff)]
-    public class BuffMessage : N3Message
+    [AoContract((int)N3MessageType.FightModeUpdate)]
+    public class FightModeUpdateMessage : N3Message
     {
-        public BuffMessage()
+        public FightModeUpdateMessage()
         {
-            this.N3MessageType = N3MessageType.Buff;
+            this.N3MessageType = N3MessageType.FightModeUpdate;
         }
 
         [AoMember(1)]
-        public short Action { get; set; }
+        public Identity Unknown1 { get; set; }
 
-        [AoMember(2)]
-        public int Instance { get; set; }
-
-        [AoMember(3)]
-        public int NanoId { get; set; }
-
+        [AoMember(2, SerializeSize = ArraySizeType.X3F1)]
+        public FightModeUpdateEntry[] Entries { get; set; }
     }
 }
