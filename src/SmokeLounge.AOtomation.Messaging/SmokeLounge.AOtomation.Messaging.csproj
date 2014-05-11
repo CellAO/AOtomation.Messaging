@@ -171,6 +171,8 @@
     <Compile Include="GameData\VendingMachineSlot.cs" />
     <Compile Include="Messages\CharSecSpecAttackMessage.cs" />
     <Compile Include="Messages\Header.cs" />
+    <Compile Include="Messages\N3Messages\ActionMessage.cs" />
+    <Compile Include="Messages\N3Messages\AttackMessage.cs" />
     <Compile Include="Messages\N3Messages\BuffMessage.cs" />
     <Compile Include="Messages\N3Messages\DoorStatusUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\FightModeUpdateMessage.cs" />
@@ -222,6 +224,7 @@
     <Compile Include="Messages\N3Messages\PlayfieldAnarchyFMessage.cs" />
     <Compile Include="Messages\N3Messages\QuestAlternativeMessage.cs" />
     <Compile Include="Messages\N3Messages\ResearchUpdateMessage.cs" />
+    <Compile Include="Messages\N3Messages\ShieldAttackMessage.cs" />
     <Compile Include="Messages\N3Messages\ShopUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\SimpleCharFullUpdateFlags.cs" />
     <Compile Include="Messages\N3Messages\SimpleCharFullUpdateMessage.cs" />
