@@ -25,7 +25,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         [AoMember(2)]
         public int Unknown2 { get; set; }
 
-        [AoUsesFlags("flag", typeof(int), FlagsCriteria.HasAny, new[] { 1 })]
+        [AoUsesFlags("flag", typeof(Identity), FlagsCriteria.HasAny, new[] { 1 })]
         [AoMember(3)]
         public Identity Unknown3 { get; set; }
 
