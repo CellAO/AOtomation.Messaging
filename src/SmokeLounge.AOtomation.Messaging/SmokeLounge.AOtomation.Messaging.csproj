@@ -178,7 +178,7 @@
     <Compile Include="Messages\N3Messages\CorpseFullUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\DoorStatusUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\FightModeUpdateMessage.cs" />
-    <Compile Include="Messages\N3Messages\HealthDamage.cs" />
+    <Compile Include="Messages\N3Messages\HealthDamageMessage.cs" />
     <Compile Include="Messages\N3Messages\InfoPacketType.cs" />
     <Compile Include="Messages\InitiateCompressionMessage.cs" />
     <Compile Include="Messages\N3Messages\AddTemplateMessage.cs" />
