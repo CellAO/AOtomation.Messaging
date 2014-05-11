@@ -22,10 +22,8 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
         [AoMember(6)]
         public int Unknown3 { get; set; }
         [AoMember(7)]
-        public int Unknown4 { get; set; }
+        public Single Unknown4 { get; set; }
         [AoMember(8)]
-        public Single Unknown5 { get; set; }
-        [AoMember(9)]
-        public int Unknown6 { get; set; }
+        public int Unknown5 { get; set; }
     }
 }
