@@ -37,22 +37,22 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
         #region AoMember Properties
 
-        [AoMember(0, SerializeSize = ArraySizeType.X3F1)]
-        public SpecialAttackInfo[] Specials { get; set; }
-
-        [AoMember(1)]
-        public int Unknown1 { get; set; }
+        [AoMember(1, SerializeSize = ArraySizeType.X3F1)]
+        public SpecialAttack[] Specials { get; set; }
 
         [AoMember(2)]
-        public int Unknown2 { get; set; }
+        public int Unknown1 { get; set; }
 
         [AoMember(3)]
-        public int Unknown3 { get; set; }
+        public int Unknown2 { get; set; }
 
         [AoMember(4)]
-        public int Unknown4 { get; set; }
+        public int Unknown3 { get; set; }
 
         [AoMember(5)]
+        public int Unknown4 { get; set; }
+
+        [AoMember(6)]
         public int Unknown5 { get; set; }
 
         #endregion

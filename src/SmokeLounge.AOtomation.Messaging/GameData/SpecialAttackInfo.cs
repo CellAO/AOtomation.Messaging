@@ -16,7 +16,7 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
 {
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
-    public class SpecialAttackInfo
+    public class SpecialAttack
     {
         #region AoMember Properties
 
