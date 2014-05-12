@@ -16,8 +16,10 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 {
     public enum OrgServerMessageType : byte
     {
-        OrgInfo = 0x02, 
+        OrgInfo = 0x02,
 
-        OrgInvite = 0x05
+        OrgInvite = 0x05,
+
+        OrgContract = 0x06,
     }
 }

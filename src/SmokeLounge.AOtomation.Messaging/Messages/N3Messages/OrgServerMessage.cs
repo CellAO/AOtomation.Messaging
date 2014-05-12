@@ -19,7 +19,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
     [AoContract((int)N3MessageType.OrgServer)]
-    [AoKnownType(26, IdentifierType.Byte)]
+    [AoKnownType(29, IdentifierType.Byte)]
     public abstract class OrgServerMessage : N3Message
     {
         #region Constructors and Destructors

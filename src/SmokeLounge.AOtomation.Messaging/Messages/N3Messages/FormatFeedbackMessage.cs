@@ -34,29 +34,11 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         [AoMember(0)]
         public int Unknown1 { get; set; }
 
-        [AoMember(1)]
-        public short DataLength { get; set; }
+        [AoMember(1,SerializeSize = ArraySizeType.Int16)]
+        public string FormattedMessage { get; set; }
 
         [AoMember(2)]
-        public short Unknown2 { get; set; }
-
-        [AoMember(3)]
-        public int Unknown3 { get; set; }
-
-        [AoMember(4)]
-        public int Unknown4 { get; set; }
-
-        [AoMember(5)]
-        public short Unknown5 { get; set; }
-
-        [AoMember(6)]
-        public byte Unknown6 { get; set; }
-
-        [AoMember(7, SerializeSize = ArraySizeType.Byte)]
-        public string Message { get; set; }
-
-        [AoMember(8)]
-        public int Unknown7 { get; set; }
+        public int Unknown2 { get; set; }
 
         #endregion
     }
