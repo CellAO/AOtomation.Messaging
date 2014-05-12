@@ -82,6 +82,8 @@ namespace SmokeLounge.AOtomation.Messaging.Messages
 
         TeamMemberInfo = 0x28784248, 
 
+        CreateQuest = 0x291f361b,
+
         FullCharacter = 0x29304349, 
 
         LaserTargetList = 0x2933154f, 
