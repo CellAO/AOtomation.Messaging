@@ -286,7 +286,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages
 
         AoTransportSignal = 0x62741e15, 
 
-        PetCommand = 0x63333303, 
+        PetCommand = 0x6b333303, 
 
         OrgServer = 0x64582a07, 
 
