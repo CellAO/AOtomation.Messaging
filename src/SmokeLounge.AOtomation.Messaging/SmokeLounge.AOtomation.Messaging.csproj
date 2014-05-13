@@ -173,6 +173,7 @@
     <Compile Include="Messages\Header.cs" />
     <Compile Include="Messages\N3Messages\ActionMessage.cs" />
     <Compile Include="Messages\N3Messages\AddPetMessage.cs" />
+    <Compile Include="Messages\N3Messages\AreaFormulaMessage.cs" />
     <Compile Include="Messages\N3Messages\AttackInfoMessage.cs" />
     <Compile Include="Messages\N3Messages\AttackMessage.cs" />
     <Compile Include="Messages\N3Messages\BuffMessage.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Messages\N3Messages\GenericCmdAction.cs" />
     <Compile Include="Messages\N3Messages\GenericCmdMessage.cs" />
     <Compile Include="Messages\N3Messages\KnuBotCloseChatWindowMessage.cs" />
+    <Compile Include="Messages\N3Messages\KnuBotNpcDescriptionMessage.cs" />
     <Compile Include="Messages\N3Messages\KnuBotOpenChatWindowMessage.cs" />
     <Compile Include="Messages\N3Messages\KnuBotRejectedItemsMessage.cs" />
     <Compile Include="Messages\N3Messages\KnuBotStartTradeMessage.cs" />
@@ -230,15 +232,18 @@
     <Compile Include="Messages\N3Messages\OrgServerMessages\OrgInfoMessage.cs" />
     <Compile Include="Messages\N3Messages\OrgServerMessages\OrgInviteMessage.cs" />
     <Compile Include="Messages\N3Messages\OrgServerMessageType.cs" />
+    <Compile Include="Messages\N3Messages\PerkUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\PetToMasterMessage.cs" />
     <Compile Include="Messages\N3Messages\PlayfieldAllTowersMessage.cs" />
     <Compile Include="Messages\N3Messages\PlayfieldAnarchyFMessage.cs" />
+    <Compile Include="Messages\N3Messages\PlaySoundMessage.cs" />
     <Compile Include="Messages\N3Messages\QuestAlternativeMessage.cs" />
     <Compile Include="Messages\N3Messages\QuestFullUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\RemovePetMessage.cs" />
     <Compile Include="Messages\N3Messages\ResearchUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\SetPosMessage.cs" />
     <Compile Include="Messages\N3Messages\SetWantedDirectionMessage.cs" />
+    <Compile Include="Messages\N3Messages\ShadowLevelMessage.cs" />
     <Compile Include="Messages\N3Messages\ShieldAttackMessage.cs" />
     <Compile Include="Messages\N3Messages\ShopUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\SimpleCharFullUpdateFlags.cs" />
