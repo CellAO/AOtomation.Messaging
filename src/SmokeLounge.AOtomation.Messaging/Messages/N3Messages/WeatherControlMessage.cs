@@ -55,10 +55,10 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public int Unknown2 { get; set; }
 
         [AoMember(3)]
-        public Single Unknown3 { get; set; }
+        public short Unknown3 { get; set; }
 
         [AoMember(4)]
-        public byte Unknown4 { get; set; }
+        public Single Unknown4 { get; set; }
 
         [AoMember(5)]
         public byte Unknown5 { get; set; }
@@ -103,6 +103,9 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public byte Unknown18 { get; set; }
 
         [AoMember(19)]
-        public Vector3 Heading { get; set; }
+        public byte Unknown19 { get; set; }
+
+        [AoMember(20)]
+        public Quaternion Heading { get; set; }
     }
 }

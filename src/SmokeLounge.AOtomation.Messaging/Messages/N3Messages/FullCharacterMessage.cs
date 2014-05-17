@@ -93,7 +93,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
 
         [AoMember(17, SerializeSize = ArraySizeType.X3F1)]
-        public Identity[] Unknown11 { get; set; }
+        public object[] Unknown11 { get; set; }
 
         [AoMember(18, SerializeSize = ArraySizeType.X3F1)]
         public object[] Unknown12 { get; set; }
@@ -102,10 +102,6 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public object[] Unknown13 { get; set; }
 
 
-        private bool Deserialize1()
-        {
-            return this.UnknownI1 != 0;
-        }
         #endregion
     }
 }
