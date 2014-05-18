@@ -169,6 +169,7 @@
     <Compile Include="GameData\TowerProxyBase.cs" />
     <Compile Include="GameData\Vector3.cs" />
     <Compile Include="GameData\VendingMachineSlot.cs" />
+    <Compile Include="GameData\WeatherType.cs" />
     <Compile Include="Messages\CharSecSpecAttackMessage.cs" />
     <Compile Include="Messages\Header.cs" />
     <Compile Include="Messages\N3Messages\ActionMessage.cs" />

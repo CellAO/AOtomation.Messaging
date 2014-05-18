@@ -49,63 +49,65 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         }
 
         [AoMember(1)]
-        public short Unknown1 { get; set; }
+        public short FadeIn { get; set; }
 
         [AoMember(2)]
-        public int Unknown2 { get; set; }
+        public int Duration { get; set; }
 
         [AoMember(3)]
-        public short Unknown3 { get; set; }
+        public short FadeOut { get; set; }
 
         [AoMember(4)]
-        public Single Unknown4 { get; set; }
+        public Single Range { get; set; }
 
         [AoMember(5)]
-        public byte Unknown5 { get; set; }
+        public byte WeatherType { get; set; }
 
         [AoMember(6)]
-        public byte Unknown6 { get; set; }
+        public byte WeatherIntensity { get; set; }
 
         [AoMember(7)]
-        public byte Unknown7 { get; set; }
+        public byte Wind { get; set; }
 
         [AoMember(8)]
-        public byte Unknown8 { get; set; }
+        public byte Clouds { get; set; }
 
         [AoMember(9)]
-        public byte Unknown9 { get; set; }
+        public byte Thunderstrikes { get; set; }
 
         [AoMember(10)]
-        public byte Unknown10 { get; set; }
+        public byte Tremors { get; set; }
 
         [AoMember(11)]
-        public byte Unknown11 { get; set; }
+        public byte TremorPercentage { get; set; }
 
         [AoMember(12)]
-        public byte Unknown12 { get; set; }
+        public byte ThunderstrikePercentage { get; set; }
 
         [AoMember(13)]
-        public byte Unknown13 { get; set; }
+        public byte CloudColorRed { get; set; }
 
         [AoMember(14)]
-        public byte Unknown14 { get; set; }
+        public byte CloudColorGreen { get; set; }
 
         [AoMember(15)]
-        public byte Unknown15 { get; set; }
+        public byte CloudColorBlue { get; set; }
 
         [AoMember(16)]
-        public byte Unknown16 { get; set; }
+        public byte FogColorRed { get; set; }
 
         [AoMember(17)]
-        public byte Unknown17 { get; set; }
+        public byte FogColorGreen { get; set; }
 
         [AoMember(18)]
-        public byte Unknown18 { get; set; }
+        public byte FogColorBlue { get; set; }
 
         [AoMember(19)]
-        public byte Unknown19 { get; set; }
+        public byte ZBufferVisibility { get; set; }
 
         [AoMember(20)]
-        public Quaternion Heading { get; set; }
+        public Vector3 Position { get; set; }
+        [AoMember(21)]
+        public Single UnknownSingle { get; set; }
     }
 }
