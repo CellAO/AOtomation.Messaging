@@ -35,12 +35,16 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
 
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq.Expressions;
     using System.Reflection;
 
     using SmokeLounge.AOtomation.Messaging.GameData;
     using SmokeLounge.AOtomation.Messaging.Messages;
     using SmokeLounge.AOtomation.Messaging.Messages.N3Messages;
+
+    using StreamReader = SmokeLounge.AOtomation.Messaging.Serialization.StreamReader;
+    using StreamWriter = SmokeLounge.AOtomation.Messaging.Serialization.StreamWriter;
 
     #endregion
 
@@ -122,14 +126,15 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
             }
             message.Stats = temp.ToArray();
 
-            int templen = streamReader.ReadInt32(); // String length!!
+            message.Unknown7 = streamReader.ReadString(streamReader.ReadInt32()).Replace("\0", "");
+            /*int templen = streamReader.ReadInt32(); // String length!!
             message.Unknown7 = "";
             while (templen > 0)
             {
                 message.Unknown7 += (char)streamReader.ReadByte();
                 templen--;
             }
-
+            message.Unknown7 = message.Unknown7.TrimEnd('\0');*/
             message.Unknown8 = streamReader.ReadInt32();
 
             if (message.Unknown8 == 2)
@@ -240,6 +245,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers.Custom
 
             streamWriter.WriteInt32(mes.Unknown8);
             streamWriter.WriteInt32(mes.Unknown9);
+            streamWriter.WriteInt32((mes.Unknown10.Length + 1) * 0x3f1);
             foreach (Identity id in mes.Unknown10)
             {
                 streamWriter.WriteIdentity(id);

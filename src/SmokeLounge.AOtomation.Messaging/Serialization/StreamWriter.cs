@@ -125,8 +125,8 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization
 
         public void WriteIdentity(Identity value)
         {
-            this.writer.Write((int)value.Type);
-            this.writer.Write(value.Instance);
+            this.writer.Write(IPAddress.HostToNetworkOrder((int)value.Type));
+            this.writer.Write(IPAddress.HostToNetworkOrder(value.Instance));
         }
 
         #endregion
