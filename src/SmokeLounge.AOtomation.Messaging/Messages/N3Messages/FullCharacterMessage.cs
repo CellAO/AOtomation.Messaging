@@ -48,9 +48,6 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         [AoMember(4)]
         public int Unknown3 { get; set; }
 
-        [AoMember(5)]
-        public int UnknownI1 { get; set; }
-
         [AoMember(6, SerializeSize=ArraySizeType.Int32)]
         public FullCharacterSub2[] Unknown4 { get; set; }
 
