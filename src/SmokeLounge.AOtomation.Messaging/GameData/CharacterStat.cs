@@ -386,9 +386,9 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
 
         LastConcretePlayfieldInstance = 0x000000BF, 
 
-        ExtenalPlayfieldInstance = 0x000000C0, 
+        ExternalPlayfieldInstance = 0x000000C0, 
 
-        ExtenalDoorInstance = 0x000000C1, 
+        ExternalDoorInstance = 0x000000C1, 
 
         InPlay = 0x000000C2, 
 
