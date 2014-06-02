@@ -317,6 +317,7 @@
     <Compile Include="Serialization\Serializers\ArraySizeSerializer.cs" />
     <Compile Include="Serialization\Serializers\ByteSerializer.cs" />
     <Compile Include="Serialization\Serializers\Custom\FollowInfoSerializer.cs" />
+    <Compile Include="Serialization\Serializers\Custom\GenericCmdSerializer.cs" />
     <Compile Include="Serialization\Serializers\Custom\PlayfieldVendorInfoSerializer.cs" />
     <Compile Include="Serialization\Serializers\Custom\SimpleCharFullUpdateSerializer.cs" />
     <Compile Include="Serialization\Serializers\Custom\VendingMachineFullUpdateMessageSerializer.cs" />

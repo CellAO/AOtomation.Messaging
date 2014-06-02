@@ -15,6 +15,7 @@
 namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 {
     using SmokeLounge.AOtomation.Messaging.GameData;
+    using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
     [AoContract((int)N3MessageType.GenericCmd)]
@@ -47,7 +48,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public Identity User { get; set; }
 
         [AoMember(5)]
-        public Identity Target { get; set; }
+        public Identity[] Target { get; set; }
 
         #endregion
     }
