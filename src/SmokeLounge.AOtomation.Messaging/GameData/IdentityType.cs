@@ -46,6 +46,8 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
 
         CanbeAffected = 0x0000C350,
 
+        CityController = 0x0000C418,
+
         Terminal = 0x0000C73D,
 
         Door = 0x0000C748,
@@ -67,6 +69,8 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
         NanoProgram = 0x0000CF1B, 
 
         GfxEffect = 0x0000CF26,
+
+        MissionEntrance = 0x0000DAC6,
 
         MissionTerminal = 0x0000DCA1,
 
