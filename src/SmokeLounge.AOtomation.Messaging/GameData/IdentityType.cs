@@ -30,10 +30,12 @@ namespace SmokeLounge.AOtomation.Messaging.GameData
 
         Backpack = 0x0000006B, 
 
+        // On Trade this will be the bag for the Character's items to sell
         KnuBotTradeWindow = 0x0000006C, 
 
         OverflowWindow = 0x0000006E, 
 
+        // On Trade this will be the bag for the Items to buy
         TradeWindow = 0x0000006F, 
 
         SocialPage = 0x00000073, 
