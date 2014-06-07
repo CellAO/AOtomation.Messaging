@@ -203,8 +203,8 @@ namespace SmokeLounge.AOtomation.Messaging.Messages
         StopFight = 0x4a41203e, 
 
         BattleOver = 0x4b062919, 
-
-        InventoryUpdated = 0x4b5e7202, 
+        
+        InventoryUpdated = 0x485e7202, 
 
         DoorStatusUpdate = 0x4c7d403b, 
 
