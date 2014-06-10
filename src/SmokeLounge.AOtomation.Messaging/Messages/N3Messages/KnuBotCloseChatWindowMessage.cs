@@ -38,7 +38,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public Identity Target { get; set; }
 
         [AoMember(2)]
-        public int Unknown2 { get; set; }
+        public int Seconds { get; set; }
 
         [AoMember(3)]
         public int Unknown3 { get; set; }
