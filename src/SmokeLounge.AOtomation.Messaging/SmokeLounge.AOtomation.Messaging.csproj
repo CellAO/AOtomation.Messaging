@@ -19,7 +19,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>$(BaseOutputPath)$(Configuration)\</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
@@ -108,6 +108,24 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\SmokeLounge.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;CONTRACTS_FULL</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -224,6 +242,7 @@
     <Compile Include="Messages\N3Messages\FullCharacterMessage.cs" />
     <Compile Include="Messages\N3Messages\GameTimeMessage.cs" />
     <Compile Include="Messages\N3Messages\KnuBotAnswerMessage.cs" />
+    <Compile Include="Messages\N3Messages\MechInfoMessage.cs" />
     <Compile Include="Messages\N3Messages\MissedAttackInfoMessage.cs" />
     <Compile Include="Messages\N3Messages\N3TeleportMessage.cs" />
     <Compile Include="Messages\N3Messages\OrgClientCommand.cs" />
@@ -242,6 +261,7 @@
     <Compile Include="Messages\N3Messages\QuestAlternativeMessage.cs" />
     <Compile Include="Messages\N3Messages\QuestFullUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\RemovePetMessage.cs" />
+    <Compile Include="Messages\N3Messages\ResearchRequestMessage.cs" />
     <Compile Include="Messages\N3Messages\ResearchUpdateMessage.cs" />
     <Compile Include="Messages\N3Messages\SetPosMessage.cs" />
     <Compile Include="Messages\N3Messages\SetWantedDirectionMessage.cs" />

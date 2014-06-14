@@ -34,23 +34,16 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
     #region Usings ...
 
     using SmokeLounge.AOtomation.Messaging.GameData;
-    using SmokeLounge.AOtomation.Messaging.Serialization;
     using SmokeLounge.AOtomation.Messaging.Serialization.MappingAttributes;
 
     #endregion
 
-    [AoContract((int)N3MessageType.ResearchUpdate)]
-    public class ResearchUpdateMessage : N3Message
+    [AoContract((int)N3MessageType.ResearchRequest)]
+    public class ResearchRequestMessage : N3Message
     {
-        public ResearchUpdateMessage()
+        public ResearchRequestMessage()
         {
-            this.N3MessageType = N3MessageType.ResearchUpdate;
+            this.N3MessageType = N3MessageType.ResearchRequest;
         }
-
-        [AoMember(1)]
-        public byte Unknown1 { get; set; }
-
-        [AoMember(2, SerializeSize = ArraySizeType.NullTerminated)]
-        public ResearchUpdateEntry[] Entries { get; set; }
     }
 }

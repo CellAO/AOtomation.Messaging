@@ -18,6 +18,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Reflection;
 
     public class ArraySerializer : ISerializer
     {
@@ -124,7 +125,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
                 var xt1 = typeof(List<>).MakeGenericType(this.typeSerializer.Type);
                 var tempList = Expression.Variable(xt1, "xt1");
                 NewExpression newListExpression = Expression.New(xt1);
-                
+
                 // Create temporary List<T>
 
                 expressions.Add(Expression.Assign(tempList, newListExpression));
@@ -248,7 +249,7 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
             }
 
             var expressions = new List<Expression>();
-            if (propertyMetaData.Options.SerializeSize != ArraySizeType.NoSerialization)
+            if ((propertyMetaData.Options.SerializeSize != ArraySizeType.NoSerialization) && (propertyMetaData.Options.SerializeSize != ArraySizeType.NullTerminated))
             {
                 var serializeSizeExp =
                     new ArraySizeSerializer(propertyMetaData.Options.SerializeSize).SerializerExpression(
@@ -277,6 +278,29 @@ namespace SmokeLounge.AOtomation.Messaging.Serialization.Serializers
 
             var forExp = Expression.Loop(ifElse, @break);
             expressions.Add(forExp);
+
+            if (propertyMetaData.Options.SerializeSize == ArraySizeType.NullTerminated)
+            {
+                MethodInfo writeCloser = null;
+                if ((propertyMetaData.Type == typeof(string)) || (propertyMetaData.Type == typeof(byte)))
+                {
+                    writeCloser = ReflectionHelper.GetMethodInfo<StreamWriter, Action<byte>>(o => o.WriteByte);
+                }
+                else if (propertyMetaData.Type == typeof(short))
+                {
+                    writeCloser = ReflectionHelper.GetMethodInfo<StreamWriter, Action<short>>(o => o.WriteInt16);
+                }
+                else
+                {
+                    writeCloser = ReflectionHelper.GetMethodInfo<StreamWriter, Action<Int32>>(o => o.WriteInt32);
+                }
+
+                Expression sernull = Expression.Call(
+                    streamWriterExpression,
+                    writeCloser,
+                    new[] { Expression.Constant(0) });
+                expressions.Add(sernull);
+            }
 
             var block = Expression.Block(new[] { counter }, expressions);
             return block;

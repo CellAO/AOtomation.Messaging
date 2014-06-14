@@ -39,18 +39,24 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
 
     #endregion
 
-    [AoContract((int)N3MessageType.ResearchUpdate)]
-    public class ResearchUpdateMessage : N3Message
+    [AoContract((int)N3MessageType.MechInfo)]
+    public class MechInfoMessage : N3Message
     {
-        public ResearchUpdateMessage()
+        public MechInfoMessage()
         {
-            this.N3MessageType = N3MessageType.ResearchUpdate;
+            this.N3MessageType = N3MessageType.MechInfo;
         }
 
         [AoMember(1)]
-        public byte Unknown1 { get; set; }
+        public int Unknown1 { get; set; }
 
-        [AoMember(2, SerializeSize = ArraySizeType.NullTerminated)]
-        public ResearchUpdateEntry[] Entries { get; set; }
+        [AoMember(2, SerializeSize = ArraySizeType.Int32)]
+        private GameTuple<int, uint>[] Stats { get; set; }
+
+        [AoMember(3)]
+        public Identity MechIdentity { get; set; }
+
+        [AoMember(4, FixedSizeLength = 4)]
+        public string Hash { get; set; }
     }
 }
