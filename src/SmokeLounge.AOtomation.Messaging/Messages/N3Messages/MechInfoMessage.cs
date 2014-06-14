@@ -51,7 +51,7 @@ namespace SmokeLounge.AOtomation.Messaging.Messages.N3Messages
         public int Unknown1 { get; set; }
 
         [AoMember(2, SerializeSize = ArraySizeType.Int32)]
-        private GameTuple<int, uint>[] Stats { get; set; }
+        public GameTuple<CharacterStat, uint>[] Stats { get; set; }
 
         [AoMember(3)]
         public Identity MechIdentity { get; set; }
